@@ -1,0 +1,11 @@
+
+module my-dockerentrypoi 1.0;
+
+require {
+	type user_home_t;
+	type container_t;
+	class lnk_file read;
+}
+
+#============= container_t ==============
+allow container_t user_home_t:lnk_file read;
