@@ -2,9 +2,7 @@ version: '3'
 services:
   node-server:
     restart: always
-    build: ./
-    volumes:
-      - ./:./
+    build: .
     ports:
       - 3000:3000
     links:

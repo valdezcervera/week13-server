@@ -4,17 +4,15 @@ module.exports = (sequelize, DataTypes) => {
     name: DataTypes.STRING,
     password: DataTypes.STRING
   }, {});
-  User.associate = function(models) {
+  User.associate = function (models) {
     // associations can be defined here
-    User.hasOne(models.Profile, {
-      through: 'UserProfile',
-      foreignKey: 'user_id',
-      as: 'profile',
+    // Belongs in Profile as profile_id
+    // hasMany Roles as role_id
+    User.belongsTo(models.Profile, {
+      foreignKey: 'profile_id',
     });
-    User.belongsToMany(models.Role, {
-      through: 'UserRole',
-      as: 'roles',
-      foreignKey: 'user_id'
+    User.hasMany(models.Role, {
+      foreignKey: 'role_id',
     });
   };
   return User;

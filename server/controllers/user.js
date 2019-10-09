@@ -1,15 +1,38 @@
 const { User, UserRole, Profile, Role } = require('../models');
 
+addUsserWithProfileAndRoles = ctx => {
+    console.log('some log', ctx.request.body)
+    try {
+        const userAdd = ctx.request.body
+        User.create({
+            name: userAdd.name,
+            password: userAdd.password,
+        },{
+            include:[{
+                model: Profile,
+            }]
+        }).then(user => {
+            user.createProfile({
+                last_name: "pato",
+                gender: "perro"
+            })
+        }).then(() => console.log('chingon!!!!!!!!!!')) 
+        ctx.status = 201;
+        ctx.body = userAdd;
+    } catch (error){
+        ctx.status = 500;
+        ctx.body = error;
+    }
+}
+
 list = async ctx => {
     try {
         const listed = await User.findAll({
             include: [{
                 model: Profile,
-                as: 'profile'
             },
             {
                 model: Role,
-                as: 'roles'
             }],
         })
         ctx.status = 201;
@@ -20,16 +43,14 @@ list = async ctx => {
     }
 }
 
-getById = ctx => {
+getById = async ctx => {
     try {
-        const userById = User.findById(ctx.request.params.id, {
+        const userById = await User.findById(ctx.request.params.id, {
             include: [{
                 model: Profile,
-                as: 'profile'
             },
             {
                 model: Role,
-                as: 'roles'
             }],
         })
         ctx.status = 201
@@ -99,5 +120,6 @@ module.exports = {
     getById,
     add,
     removeUser,
-    update
+    update,
+    addUsserWithProfileAndRoles,
 };

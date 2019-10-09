@@ -1,20 +1,17 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('CreditCards', {
+    return queryInterface.createTable('Batch_models', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      cardname: {
-        type: Sequelize.STRING
+      graduation_year: {
+        type: Sequelize.INTEGER
       },
-      cardnbr: {
-        type: Sequelize.STRING
-      },
-      expired_date: {
+      graduation_month: {
         type: Sequelize.STRING
       },
       createdAt: {
@@ -28,6 +25,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('CreditCards');
+    return queryInterface.dropTable('Batch_models');
   }
 };

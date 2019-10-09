@@ -1,23 +1,38 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Branches', {
+    return queryInterface.createTable('User_profile_models', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      company_id: {
-        type: Sequelize.INTEGER
-      },
-      branch_name: {
+      last_name: {
         type: Sequelize.STRING
       },
-      branch_address: {
+      birthdate: {
         type: Sequelize.STRING
       },
-      branch_city: {
+      picture_url: {
+        type: Sequelize.STRING
+      },
+      picture_big_url: {
+        type: Sequelize.STRING
+      },
+      picture_small_url: {
+        type: Sequelize.STRING
+      },
+      is_admin: {
+        type: Sequelize.BOOLEAN
+      },
+      github: {
+        type: Sequelize.STRING
+      },
+      linkedin: {
+        type: Sequelize.STRING
+      },
+      email: {
         type: Sequelize.STRING
       },
       createdAt: {
@@ -31,6 +46,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Branches');
+    return queryInterface.dropTable('User_profile_models');
   }
 };

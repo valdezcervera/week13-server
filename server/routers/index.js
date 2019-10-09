@@ -18,7 +18,6 @@ router.get('/api/user/:id', userController.getById);
 router.post('/api/user', userController.add);
 router.put('/api/user/:id', userController.update);
 router.delete('/api/user/:id', userController.removeUser);
-
-
+router.post('/api/profile', userController.addUsserWithProfileAndRoles);
 
 module.exports = router;

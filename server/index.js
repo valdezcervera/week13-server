@@ -20,9 +20,6 @@ app.use(bodyParser())
 app.use(sessionMdware);
 app.use(router.routes());
 
-//app.listen(PORT, () => {
-//  console.log(`Server is listening on port ${PORT}✫*ﾟ･ﾟ｡.☆🛰*｡･ﾟ✫*️`);
-//});
 (async ()=>{
     //call sequelize.sync an let it do its magic ;)
     await db.sequelize.sync({force:true})
