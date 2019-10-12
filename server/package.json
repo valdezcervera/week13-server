@@ -31,6 +31,8 @@
     "koa-npm": "0.0.4",
     "koa-req-logger": "^1.5.3",
     "koa-router": "^7.4.0",
+    "passport": "^0.4.0",
+    "passport-google-oauth20": "^2.0.0",
     "path": "^0.12.7",
     "pg": "^7.12.1",
     "pg-hstore": "^2.3.3",

@@ -1,38 +1,58 @@
-const { User, UserRole, Profile, Role } = require('../models');
+const { User_model, User_profile_model, Location_model, Batch_model, Friend_relations_model } = require('../models');
+const bcrypt = require('bcrypt')
+const saltRound = 10;
 
-addUsserWithProfileAndRoles = ctx => {
-    console.log('some log', ctx.request.body)
-    try {
-        const userAdd = ctx.request.body
-        User.create({
-            name: userAdd.name,
-            password: userAdd.password,
-        },{
-            include:[{
-                model: Profile,
+createProfile =  ctx => {
+    const userInfo = ctx.request.body;
+    bcrypt.hash(userInfo.password, saltRound).then((hashedPassword) => {
+        return User_profile_model.create({
+            birthdate: userInfo.birthdate,
+            gender: userInfo.birthdate,
+            picture_url: userInfo.picture_url,
+            picture_big_url: userInfo.picture_big_url,
+            picture_small_url: userInfo.picture_small_url,
+            github: userInfo.github,
+            linkedin: userInfo.linkedin,
+            email: userInfo.email
+        }, {
+            include: [{
+                model: User_model,
             }]
         }).then(user => {
-            user.createProfile({
-                last_name: "pato",
-                gender: "perro"
+            user.createUser_model({
+                google_id: userInfo.google_id,
+                user_name: userInfo.user_name,
+                last_name: userInfo.last_name,
+                first_name: userInfo.first_name,
+                is_admin: userInfo.is_admin,
+                password: hashedPassword
+            }, {
+                include: [{
+                    model: Location_model,
+                }]
+            }).then(location => {
+                location.createLocation_model({
+                    country: userInfo.country,
+                    province: userInfo.province,
+                    city: userInfo.city
+                })
             })
-        }).then(() => console.log('chingon!!!!!!!!!!')) 
-        ctx.status = 201;
-        ctx.body = userAdd;
-    } catch (error){
-        ctx.status = 500;
-        ctx.body = error;
-    }
+        })
+            .then(() => {
+                ctx.status = 201
+                ctx.body = 'Profile has been created succesfully!'
+            })
+            .catch((error) => ctx.status(400).send(error));
+    })
 }
+
 
 list = async ctx => {
     try {
-        const listed = await User.findAll({
+        const listed = await User_profile_model.findAll({
             include: [{
-                model: Profile,
-            },
-            {
-                model: Role,
+                model: User_model,
+                attributes: { exclude: ['password'] }
             }],
         })
         ctx.status = 201;
@@ -43,83 +63,26 @@ list = async ctx => {
     }
 }
 
-getById = async ctx => {
+
+listFull = async ctx => {
     try {
-        const userById = await User.findById(ctx.request.params.id, {
+        const listed = await User_profile_model.findAll({
             include: [{
-                model: Profile,
-            },
-            {
-                model: Role,
-            }],
+                model: User_model,
+                include: [{ model: Location_model }]
+            }]
         })
-        ctx.status = 201
-        ctx.body = userById
-    } catch (error) {
-        ctx.status = 500;
-        ctx.body = error;
-    };
-}
-
-add = ctx => {
-    console.log(User.create)
-    try {
-        const userAdd = ctx.request.body;
-        User.create({
-            name: userAdd.name,
-            password: userAdd.password
-        })
-        ctx.status = 201
-        ctx.body = userAdd
-    } catch (error) {
-        ctx.status = 500;
-        ctx.body = error;
-        console.log(error)
-    }
-}
-
-removeUser = ctx => {
-    try {
-        const userToDelete = User.findById(ctx.request.params.id)
-        userToDelete.destroy()
-        ctx.status = 201
-        ctx.body = userToDelete + 'has been destroyed!'
+        ctx.status = 201;
+        ctx.body = listed;
     } catch (error) {
         ctx.status = 500;
         ctx.body = error;
     }
 }
 
-update = ctx => {
-    try {
-        const UpdateUser = User.findById(ctx.request.params.id, {
-            include: [{
-                model: Profile,
-                as: 'profile'
-            },
-            {
-                model: Role,
-                as: 'roles'
-            }],
-        })
-        UpdateUser.update({
-            username: ctx.request.body.username || user.username,
-            password: ctx.request.body.password || user.password,
-        })
-        ctx.status = 201
-        ctx.body = UpdateUser + 'has been updated'
-
-    } catch (error) {
-        ctx.status = 500;
-        ctx.body = error;
-    }
-}
 
 module.exports = {
     list,
-    getById,
-    add,
-    removeUser,
-    update,
-    addUsserWithProfileAndRoles,
+    createProfile,
+    listFull
 };
