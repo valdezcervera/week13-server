@@ -6,7 +6,7 @@ const sessionMdware = require('./session.middleware');
 const db = require ('./models/index')
 const router = require('./routers');
 
-// Instantiate app & logger. Set port to listen  
+// Instantiate app & logger. Set port to listen.  
 const app = new Koa();
 const logger = new KoaReqLogger();
 const PORT = process.env.PORT || 5000;
