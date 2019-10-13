@@ -29,6 +29,8 @@ createProfile =  ctx => {
             }, {
                 include: [{
                     model: Location_model,
+                },{
+                    model: Batch_model,
                 }]
             }).then(location => {
                 location.createLocation_model({
@@ -46,15 +48,34 @@ createProfile =  ctx => {
     })
 }
 
+addBatch = async ctx => {
+    const newUserData = {
+        user_name: ctx.request.body.user_name,
+        last_name: ctx.request.body.last_name,
+        first_name: ctx.request.body.first_name,
+        is_admin: ctx.request.body.is_admin,
+        Batch_model: {
+            batch_number: ctx.request.body.batch_number,
+            graduation_year: ctx.request.body.graduation_year,
+            graduation_month: ctx.request.body.graduation_month
+        },
+    }
+    
+    try {
+        const newUser = await User_model.create(newUserData, { include: [ Batch_model ] })
+        // newUser.setLocation_model(10)
+        // await newUser.save()
+        ctx.status = 201
+        ctx.body = newUser
+    } catch (error) {
+        ctx.status = 500;
+        ctx.body = error;
+    }
+}
 
 list = async ctx => {
     try {
-        const listed = await User_profile_model.findAll({
-            include: [{
-                model: User_model,
-                attributes: { exclude: ['password'] }
-            }],
-        })
+        const listed = await User_model.findAll({ include: [ Batch_model ] })
         ctx.status = 201;
         ctx.body = listed;
     } catch (error) {
@@ -84,5 +105,8 @@ listFull = async ctx => {
 module.exports = {
     list,
     createProfile,
-    listFull
+    listFull,
+    addBatch
 };
+
+

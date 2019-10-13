@@ -21,7 +21,7 @@ app.use(router.routes());
 
 (async ()=>{
     //call sequelize.sync an let it do its magic ;) 
-    await db.sequelize.sync()
+    await db.sequelize.sync({force: true})
     .then(() => {
         console.log('DB connection successfull!.');
       })

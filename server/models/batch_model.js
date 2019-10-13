@@ -7,6 +7,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   Batch_model.associate = function(models) {
     // associations can be defined here
+    Batch_model.hasMany(models.User_model);
   };
   return Batch_model;
 };
