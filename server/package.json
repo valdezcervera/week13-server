@@ -22,6 +22,7 @@
   "author": "Cesar Valdez/Lukas Rapen/Yerbol Kosbayev",
   "license": "ISC",
   "dependencies": {
+    "@koa/multer": "^2.0.0",
     "@koa/router": "^8.0.1",
     "bcrypt": "^3.0.6",
     "fs": "0.0.1-security",
@@ -31,6 +32,7 @@
     "koa-npm": "0.0.4",
     "koa-req-logger": "^1.5.3",
     "koa-router": "^7.4.0",
+    "multer": "^1.4.2",
     "passport": "^0.4.0",
     "passport-google-oauth20": "^2.0.0",
     "path": "^0.12.7",
