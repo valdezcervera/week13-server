@@ -16,7 +16,8 @@ const upload = multer({ dest: 'uploads/', limits: limits, fileFilter: filterFile
 
 // REQUIRE CONTROLLERS
 const userController = require('../controllers/user');
-const userAuth = require('../controllers/basic.auth')
+const userAuth = require('../controllers/basic.auth');
+const batchController = require('../controllers/batch');
 
 // USER 
 //authenticate user
@@ -26,10 +27,18 @@ router.post('/profile', userController.createProfile);
 //user profile upload picture
 router.post('/profile/photo/:uid', upload.single('photo'), userController.uploadPhoto)
 // get a list with all profiles
-router.get('/profiles/all', userController.listFull);
+router.get('/profiles/all', userController.listAll);
 // get basic user info by uid
 router.get('/user/:uid', userController.listUser);
 // 
-router.post('/api/addBatch', userController.addBatch)
+
+// BATCH
+// add batch
+router.post('/addBatch', batchController.addBatch)
+// update batch
+router.post('/addBatchUser/:uid', batchController.updateUserBatch)
+// get a batch
+router.get('/batch/all', batchController.listAll)
+
 
 module.exports = router;

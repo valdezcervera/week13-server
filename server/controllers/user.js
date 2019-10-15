@@ -28,7 +28,7 @@ createProfile = async ctx => {
             Batch_model: {
                 batch_number: userInfo.batch_number,
                 graduation_year: userInfo.graduation_year,
-                graduation_month: userInfo.graduation_month
+                graduation_month: userInfo.graduation_month,
             },
         },
     }
@@ -43,31 +43,6 @@ createProfile = async ctx => {
         ctx.body = error;
     }
 
-}
-
-addBatch = async ctx => {
-    const newUserData = {
-        user_name: ctx.request.body.user_name,
-        last_name: ctx.request.body.last_name,
-        first_name: ctx.request.body.first_name,
-        is_admin: ctx.request.body.is_admin,
-        Batch_model: {
-            batch_number: ctx.request.body.batch_number,
-            graduation_year: ctx.request.body.graduation_year,
-            graduation_month: ctx.request.body.graduation_month
-        },
-    }
-    
-    try {
-        const newUser = await User_model.create(newUserData, { include: [ Batch_model ] })
-        // newUser.setLocation_model(10)
-        // await newUser.save()
-        ctx.status = 201
-        ctx.body = newUser
-    } catch (error) {
-        ctx.status = 500;
-        ctx.body = error;
-    }
 }
 
 listUser = async ctx => {
@@ -86,12 +61,13 @@ listUser = async ctx => {
     }
 }
 
-listFull = async ctx => {
+listAll = async ctx => {
     try {
         const listed = await User_profile_model.findAll({
             include: [{
                 model: User_model,
-                include: [ Location_model, Batch_model ]
+                include: [ Location_model, Batch_model ],
+                attributes: { exclude: ['password'] }
             }]
         })
         ctx.status = 201;
@@ -121,8 +97,7 @@ uploadPhoto = async ctx => {
 module.exports = {
     listUser,
     createProfile,
-    listFull,
-    addBatch,
+    listAll,
     uploadPhoto
 };
 
