@@ -32,6 +32,7 @@
     "koa-npm": "0.0.4",
     "koa-req-logger": "^1.5.3",
     "koa-router": "^7.4.0",
+    "koa-static-server": "^1.4.0",
     "lodash.merge": "^4.6.2",
     "multer": "^1.4.2",
     "passport": "^0.4.0",

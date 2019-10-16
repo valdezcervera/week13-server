@@ -10,10 +10,10 @@ module.exports = (sequelize, DataTypes) => {
     is_admin: DataTypes.BOOLEAN,
     password: DataTypes.STRING
   }, {});
-  User_model.associate = function(models) {
+  User_model.associate = function (models) {
     // associations can be defined here
     User_model.belongsTo(models.Location_model, { foreignKey: "user_location_id" });
-    User_model.belongsTo(models.Batch_model, { foreignKey: "user_batch_id"});
+    User_model.belongsTo(models.Batch_model, { foreignKey: "user_batch_id" });
   };
   return User_model;
 };

@@ -10,11 +10,9 @@ module.exports = (sequelize, DataTypes) => {
     linkedin: DataTypes.STRING,
     email: DataTypes.STRING
   }, {});
-  User_profile_model.associate = function(models) {
+  User_profile_model.associate = function (models) {
     // associations can be defined here
-    User_profile_model.belongsTo(models.User_model, {foreignKey:"user_id"});
-    // User_profile_model.hasOne(models.Location_model, {foreignKey:"location_id"});
-    // User_profile_model.hasOne(models.Batch_model, {foreignKey:"batch_id"});
+    User_profile_model.belongsTo(models.User_model, { foreignKey: "user_id" });
   };
   return User_profile_model;
 };

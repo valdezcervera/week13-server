@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
     graduation_year: DataTypes.INTEGER,
     graduation_month: DataTypes.STRING
   }, {});
-  Batch_model.associate = function(models) {
+  Batch_model.associate = function (models) {
     // associations can be defined here
     Batch_model.hasMany(models.User_model);
   };
