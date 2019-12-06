@@ -11,7 +11,7 @@ Find project collaborators
 
 ### Screenshots
 
-<img src='./screenshots/Week13-screenshot.jpg' alt='week13' width="1400" height="700">
+<img src='./screenshots/Week13-screenshot.jpg' alt='week13'>
 
 
 ### API Installation
