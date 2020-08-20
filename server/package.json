@@ -24,7 +24,7 @@
   "dependencies": {
     "@koa/multer": "^2.0.0",
     "@koa/router": "^8.0.1",
-    "bcrypt": "^3.0.6",
+    "bcrypt": "^5.0.0",
     "fs": "0.0.1-security",
     "koa": "^2.8.2",
     "koa-body": "^4.1.1",
